@@ -1,8 +1,9 @@
 plugins {
     kotlin("jvm") version "1.8.0"
+    `maven-publish`
 }
 
-group = "com.benn.dev"
+group = "com.github.Dev-Beom"
 version = "1.0-SNAPSHOT"
 
 repositories {
