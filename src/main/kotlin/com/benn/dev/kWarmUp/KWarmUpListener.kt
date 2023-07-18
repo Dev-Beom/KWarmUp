@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationListener
 import org.springframework.context.event.ContextRefreshedEvent
 import org.springframework.stereotype.Component
 import kotlin.jvm.Throws
+import kotlin.concurrent.thread
 
 @Component
 class KWarmUpListener : ApplicationListener<ContextRefreshedEvent> {
@@ -21,12 +22,14 @@ class KWarmUpListener : ApplicationListener<ContextRefreshedEvent> {
                     KWarmUpValidator.valid(method)
                     val metadata = method.getAnnotation(KWarmUp::class.java)
                     val count = metadata.repeatCount
-                    logger.info("warm up start. method: ${method.name}, count: $count")
-                    // TODO configured to work in a separate thread
-                    repeat(count) {
-                        method.invoke(bean)
+                    val workerThread = thread(false) {
+                        repeat(count) {
+                            method.invoke(bean)
+                        }
                     }
-                    logger.info("warm up end. method: ${method.name}, count: $count")
+                    logger.info("warm up start. thread: ${workerThread.name}, method: ${method.name}, count: $count")
+                    workerThread.start()
+                    logger.info("warm up end. thread: ${workerThread.name}, method: ${method.name}, count: $count")
                 }
             }
         }
