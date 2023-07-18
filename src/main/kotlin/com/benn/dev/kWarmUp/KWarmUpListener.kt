@@ -13,9 +13,7 @@ class KWarmUpListener : ApplicationListener<ContextRefreshedEvent> {
     @Throws(IllegalArgumentException::class)
     override fun onApplicationEvent(event: ContextRefreshedEvent) {
         val applicationContext = event.applicationContext
-        val beans = applicationContext.getBeansWithAnnotation(KWarmUp::class.java)
-        val targetMethods = beans.values.map { it.javaClass.declaredMethods.toList() }.flatten()
-        logger.info("warm up target methods: ${targetMethods.joinToString { it.name }}")
+        val beans = applicationContext.getBeansWithAnnotation(Component::class.java)
         for (bean in beans.values) {
             val methods = bean.javaClass.declaredMethods
             for (method in methods) {
