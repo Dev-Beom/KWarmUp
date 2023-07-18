@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.benn.dev.kWarmUp.KWarmUpBeanRegistrationProcessor,\
+  com.benn.dev.kWarmUp.KWarmUpListener
