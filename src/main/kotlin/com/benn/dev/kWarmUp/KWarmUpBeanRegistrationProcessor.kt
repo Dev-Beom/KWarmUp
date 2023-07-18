@@ -16,9 +16,8 @@ class KWarmUpBeanRegistrationProcessor : BeanDefinitionRegistryPostProcessor {
     override fun postProcessBeanDefinitionRegistry(registry: BeanDefinitionRegistry) {
         val componentProvider = ClassPathScanningCandidateComponentProvider(false)
         componentProvider.addIncludeFilter(AnnotationTypeFilter(Component::class.java))
-        val basePackage = "com.benn.dev.kWarmUp"
-        logger.info("$basePackage 로 postProcessBeanDefinitionRegistry")
-        val beanDefinitions = componentProvider.findCandidateComponents(basePackage)
+        logger.info("${Constant.BASE_PACKAGE}, postProcessBeanDefinitionRegistry")
+        val beanDefinitions = componentProvider.findCandidateComponents(Constant.BASE_PACKAGE)
         logger.info("$beanDefinitions")
         for (beanDefinition in beanDefinitions) {
             beanDefinition.beanClassName?.let { registry.registerBeanDefinition(it, beanDefinition) }

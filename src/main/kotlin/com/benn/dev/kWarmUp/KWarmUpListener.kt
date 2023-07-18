@@ -20,7 +20,7 @@ class KWarmUpListener : ApplicationListener<ContextRefreshedEvent> {
                 if (method.isAnnotationPresent(KWarmUp::class.java)) {
                     KWarmUpValidator.valid(method)
                     val metadata = method.getAnnotation(KWarmUp::class.java)
-                    val count = metadata.count
+                    val count = metadata.repeatCount
                     logger.info("warm up start. method: ${method.name}, count: $count")
                     // TODO configured to work in a separate thread
                     repeat(count) {

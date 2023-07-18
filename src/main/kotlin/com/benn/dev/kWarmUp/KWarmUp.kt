@@ -5,4 +5,4 @@ package com.benn.dev.kWarmUp
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class KWarmUp(val count: Int)
+annotation class KWarmUp(val repeatCount: Int = 1000)
